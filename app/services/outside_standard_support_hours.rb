@@ -12,7 +12,9 @@ class OutsideStandardSupportHours
   def call
     return if inside_standard_support_hours?
 
-    slack.ping "Github user #{@user} took responsibility for #{@app} (at #{@environment}) by deploying outside of standard support hours."
+    announcement = ENV['ANNOUNCEMENT'] || "Github user *%{user}* took responsibility for _%{app}_ (at _%{environment}_) by deploying outside of standard support hours."
+
+    slack.ping announcement % { user: @user, app: @app, environment: @environment }
   end
 
   private
