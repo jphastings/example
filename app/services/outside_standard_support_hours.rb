@@ -10,6 +10,7 @@ class OutsideStandardSupportHours
   end
 
   def call
+    return unless is_production?
     return if inside_standard_support_hours?
 
     announcement = ENV['ANNOUNCEMENT'] || "Github user *%{user}* took responsibility for _%{app}_ (at _%{environment}_) by deploying outside of standard support hours."
@@ -28,6 +29,10 @@ class OutsideStandardSupportHours
     when 5 # Fri
       return @deployed_at.hour >= 9 && @deployed_at.hour < 12
     end
+  end
+
+  def is_production?
+    @environment.include?('prod')
   end
 
   def slack

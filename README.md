@@ -1,24 +1,12 @@
-# README
+# Spiderman
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Post a message to a public slack channel when someone deploys a github repo outside of standard support hours.
 
-Things you may want to cover:
+## Notes
 
-* Ruby version
+This is a _very_ basic implementation of what this app could be. Things I'd like to include:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Looking up slack usernames from github ones somehow
+* Dealing with timezones (can we find out what timezone the deployer is in from the commits?)
+* Optionally making a lead of a team responsible (rather than the individual)
+* Posting an on-call override to PagerDuty when this happens
