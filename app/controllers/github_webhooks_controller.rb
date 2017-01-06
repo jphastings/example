@@ -1,7 +1,8 @@
 class GithubWebhooksController < ActionController::Base
   include GithubWebhook::Processor
 
-  def github_deployment(payload)
+  def github_pull_request(payload)
+    return unless describes_merge?(payload)
     OutsideStandardSupportHours.new(
       app: payload['repository']['name'],
       environment: payload['deployment']['environment'],
@@ -12,5 +13,12 @@ class GithubWebhooksController < ActionController::Base
 
   def webhook_secret(payload)
     Rails.application.secrets.github_webhook_secret
+  end
+
+  private
+
+  def describes_merge?(payload)
+    return false if payload['action'] != 'closed'
+    !!payload['pull_request']['merged']
   end
 end
